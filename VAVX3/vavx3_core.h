@@ -12,10 +12,13 @@
 #define RESIDENT_CORE __attribute__((always_inline, hot, aligned(64)))
 #define SYSTOLIC_STAGE __attribute__((flatten))
 
+#ifndef VAVX3_512I_DEFINED
+#define VAVX3_512I_DEFINED 1
 typedef struct {
     __m256i v0; 
     __m256i v1; 
 } vavx3_512i;
+#endif
 
 // --- [基础指令] ---
 static inline vavx3_512i RESIDENT_CORE vavx3_load_512(const void* p) {
@@ -116,6 +119,11 @@ static inline vavx3_512i RESIDENT_CORE vavx3_geo_mask_addr_512(vavx3_512i addr, 
     return r;
 }
 
+/* [整合修复] 兼容别名: primitives.h 旧名 (axioms.h 使用) */
+static inline vavx3_512i RESIDENT_CORE vavx3_mask_addr_512(vavx3_512i addr, int mask) {
+    return vavx3_geo_mask_addr_512(addr, mask);
+}
+
 // 24. [V-Wave] 波动方程二阶步进原语 (Wave Equation Step)
 // 蛙跳法实现：psi_next = 2*psi_curr - psi_prev + c2 * Laplacian
 static inline vavx3_512i RESIDENT_CORE vavx3_wave_step_512(vavx3_512i curr, vavx3_512i prev, vavx3_512i laplacian, int c2_scaled) {
@@ -181,7 +189,10 @@ static inline vavx3_512i RESIDENT_CORE vavx3_entangle_512(vavx3_512i v) {
 #define SYSTOLIC_STAGE
 
 // Empty stub type for non-x86
+#ifndef VAVX3_512I_DEFINED
+#define VAVX3_512I_DEFINED 1
 typedef struct { long long _dummy[8]; } vavx3_512i;
+#endif
 
 // Empty stub functions for non-x86 targets
 static inline vavx3_512i vavx3_load_512(const void* p) { vavx3_512i r = {0}; return r; }
@@ -196,6 +207,7 @@ static inline void vavx3_armillary_rotate_512(vavx3_512i* x, vavx3_512i* y, int 
 static inline vavx3_512i vavx3_topological_braid_512(vavx3_512i a, vavx3_512i b) { vavx3_512i r = {0}; return r; }
 static inline vavx3_512i vavx3_geo_vortex_map_512(vavx3_512i r, vavx3_512i theta) { vavx3_512i res = {0}; return res; }
 static inline vavx3_512i vavx3_geo_mask_addr_512(vavx3_512i addr, int mask) { vavx3_512i r = {0}; return r; }
+static inline vavx3_512i vavx3_mask_addr_512(vavx3_512i addr, int mask) { vavx3_512i r = {0}; return r; }
 static inline vavx3_512i vavx3_wave_step_512(vavx3_512i curr, vavx3_512i prev, vavx3_512i laplacian, int c2_scaled) { vavx3_512i r = {0}; return r; }
 static inline vavx3_512i vavx3_harmonic_interfere_512(vavx3_512i layer_a, vavx3_512i layer_b) { vavx3_512i r = {0}; return r; }
 static inline vavx3_512i vavx3_yamabe_flow_512(vavx3_512i psi, vavx3_512i laplacian) { vavx3_512i r = {0}; return r; }

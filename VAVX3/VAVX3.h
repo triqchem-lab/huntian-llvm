@@ -25,7 +25,7 @@
 #include "vavx3_axioms.h"
 
 // HunTian integration
-#include "llvm/Support/QuantumClock.h"
-#include "llvm/Support/XuangongTuning.h"
+#include "../passes/QuantumClock.h"  // [整合修复] 原 llvm/Support 路径与仓库布局不符
+#include "../passes/XuangongTuning.h"  // [整合修复] 同上
 
 #endif // LLVM_SUPPORT_VAVX3_VAVX3_H

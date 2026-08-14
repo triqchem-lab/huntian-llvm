@@ -9,6 +9,17 @@
 #ifndef VAVX3_BLAS_H
 #define VAVX3_BLAS_H
 
+/* ═══════════════════════════════════════════════════════════════
+ * ⚠️ [宪法违例标注] 本头文件是浮点 BLAS 层 (float/double 512 位向量),
+ *    违反律算合一宪法「禁浮点」条款 (对照 math 库的纯整数 Q16.16 定点)。
+ *    隔离策略 (2026-08-16):
+ *    - 本层不纳入 VAVX3.h 伞头文件 (伞头仅整数 SIMD 原语);
+ *    - 仅显式 #include "vavx3_blas.h" 的调用方才承担违例;
+ *    - 禁用场景: 证明/验证/宪法合规路径; 允许场景: 工程原型对照。
+ *    整数等价实现: vavx3_geo_toroidal_inversion_512 (core) 的定点版待补。
+ * ═══════════════════════════════════════════════════════════════ */
+
+
 #include <immintrin.h>
 
 #define RESIDENT_CORE __attribute__((always_inline, hot, aligned(64)))

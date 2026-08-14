@@ -7,9 +7,9 @@ LDFLAGS = -lm
 
 PYTHON = python3
 
-SRC_DIR = src
+SRC_DIR = tests
 BUILD_DIR = build
-INCLUDE_DIR = src
+INCLUDE_DIR = ../ternary-core/include
 
 # 源文件
 C_SRCS = $(SRC_DIR)/test_vavx3_manifold.c
@@ -23,7 +23,7 @@ C_TARGETS = $(BUILD_DIR)/test_vavx3_manifold
 all: $(C_TARGETS)
 
 # 编译 C 程序
-$(BUILD_DIR)/test_vavx3_manifold: $(SRC_DIR)/test_vavx3_manifold.c $(SRC_DIR)/vavx3_cpu_impl.h
+$(BUILD_DIR)/test_vavx3_manifold: $(SRC_DIR)/test_vavx3_manifold.c ../ternary-core/include/vavx3_cpu_impl.h
 	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) $< -o $@ $(LDFLAGS)
 
 # 运行所有测试
